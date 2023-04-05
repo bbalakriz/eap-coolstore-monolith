@@ -10,7 +10,6 @@ build:
       - ejb
       - cdi
       - messaging-activemq
-    jdk: '8'
   env:
     - name: POSTGRESQL_DRIVER_VERSION
       value: 42.6.0
