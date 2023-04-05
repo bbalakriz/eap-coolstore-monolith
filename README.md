@@ -16,7 +16,7 @@ oc new-project coolstore
 ## Deploy RH SSO operator
 
 ```
-oc apply -f sso-operator.yml
+oc apply -f ./openshift/sso-operator.yml
 ```
 
 Wait for RH SSO Operator to be deployed (waiting until the ClusterServiceVersion's `PHASE` is set to `Suceeded`)
@@ -35,7 +35,7 @@ rhsso-operator.7.6.2-opr-001   Red Hat Single Sign-On Operator   7.6.2-opr-001  
 ## Deploy & configure the RH SSO instance
 
 ```
-oc apply -f sso.yml
+oc apply -f ./openshift/sso.yml
 ```
 
 Run `oc get route keycloak ` (it may take a few attempts for route to be created) and update `KEYCLOAK_URL` value in `helm.yaml` with correct route for SSO.
@@ -49,13 +49,13 @@ Run `oc get route keycloak ` (it may take a few attempts for route to be created
 ## Deploy PostgreSQL database
 
 ```
-oc apply -f psql.yml
+oc apply -f ./openshift/psql.yml
 ```
 
 ## Install Active MQ broker operator
 
 ```
-oc apply -f amq-broker-operator.yml
+oc apply -f ./openshift/amq-broker-operator.yml
 ```
 
 
@@ -75,7 +75,7 @@ amq-broker-operator.v7.10.2-opr-2-0.1676475747.p   Red Hat Integration - AMQ Bro
 ## Create and configure Active MQ broker instance
 
 ```
-oc apply -f amq-broker.yml
+oc apply -f ./openshift/amq-broker.yml
 ```
 
 ## Deploy application
@@ -83,12 +83,12 @@ oc apply -f amq-broker.yml
 Create config map from cm.yaml
 
 ```
-oc apply -f cm.yaml
+oc apply -f ./openshift/cm.yaml
 ```
 
 From the developer UI, click on "+Add", then "Helm Chart", and select the "Eap74" Helm chart.
 
-Paste the contents of "helm.yml" as the config.
+Paste the contents of `openshift/helm.yml` as the config.
 
 ## Testing the application
 

@@ -45,4 +45,4 @@ deploy:
     # Make sure to update the KEYCLOAK_URL with the content of `oc get route keycloak`
     # Do not forget to prepend `https://` and append `/auth`
     - name: KEYCLOAK_URL
-      value: https://keycloak-coolstore.apps.92393e11c4ffbef7e179.hypershift.aws-2.ci.openshift.org/auth
+      value: https://keycloak-coolstore.apps.e71ecc5b5e10048ab57b.hypershift.aws-2.ci.openshift.org/auth

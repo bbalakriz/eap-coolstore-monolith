@@ -1,3 +1,11 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: rhsso-operator
+spec:
+  targetNamespaces:
+  - coolstore
+---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
