@@ -8,6 +8,7 @@ build:
       - cloud-server
       - postgresql-datasource
       - ejb
+      - web-clustering
   env:
     - name: POSTGRESQL_DRIVER_VERSION
       value: 42.6.0
