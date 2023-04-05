@@ -1,66 +1,48 @@
-image:
-  tag: latest
 build:
-  enabled: true
-  mode: s2i
-  output:
-    kind: ImageStreamTag
-  env:
-    # - name: GALLEON_PROVISION_FEATURE_PACKS
-    #   value: "org.jboss.eap:eap-datasources-galleon-pack:7.4.0.GA-redhat-00003"
-    # - name: GALLEON_PROVISION_LAYERS
-    #   value: "cloud-server,postgresql-datasource"
-    # - name: POSTGRESQL_DRIVER_VERSION
-    #   value: "42.2.19"
-    - name: CUSTOM_INSTALL_DIRECTORIES
-      value: extensions
-  s2i:
-    arch: amd64
-    jdk: '11'
-    amd64:
-      jdk8:
-        builderImage: registry.redhat.io/jboss-eap-7/eap74-openjdk8-openshift-rhel7
-        runtimeImage: registry.redhat.io/jboss-eap-7/eap74-openjdk8-runtime-openshift-rhel7
-      jdk11:
-        builderImage: registry.redhat.io/jboss-eap-7/eap74-openjdk11-openshift-rhel8
-        runtimeImage: registry.redhat.io/jboss-eap-7/eap74-openjdk11-runtime-openshift-rhel8
-    version: latest
-  uri: 'https://github.com/deewhyweb/eap-coolstore-monolith.git'
+  uri: https://github.com/deewhyweb/eap-coolstore-monolith.git
   ref: ocp
+  s2i:
+    featurePacks:
+      - 'org.jboss.eap:eap-datasources-galleon-pack:7.4.0.GA-redhat-00003'
+    galleonLayers:
+      - cloud-server
+      - postgresql-datasource
+      - ejb
+      - cdi
+      - messaging-activemq
+    jdk: '8'
+  env:
+    - name: POSTGRESQL_DRIVER_VERSION
+      value: 42.6.0
 deploy:
-  enabled: true
+  replicas: 1
   envFrom:
     - configMapRef:
         name: eap-config
   env:
-    - valueFrom:
+    # Credentials to connect to the PostgreSQL databases
+    # and AMQ Broker are taken from their secrets
+    - name: POSTGRESQL_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: database-password
+          name: postgresql
+    - name: POSTGRESQL_USER
+      valueFrom:
+        secretKeyRef:
+          key: database-user
+          name: postgresql
+    - name: MQ_USERNAME
+      valueFrom:
         secretKeyRef:
           key: AMQ_USER
           name: eap74-amq7-credentials-secret
-      name: MQ_USERNAME
-    - valueFrom:
+    - name: MQ_PASSWORD
+      valueFrom:
         secretKeyRef:
           key: AMQ_PASSWORD
           name: eap74-amq7-credentials-secret
-      name: MQ_PASSWORD
-  route:
-    enabled: true
-    tls:
-      enabled: true
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect
-  livenessProbe:
-    exec:
-      command:
-        - /bin/bash
-        - '-c'
-        - /opt/eap/bin/livenessProbe.sh
-    initialDelaySeconds: 60
-  readinessProbe:
-    exec:
-      command:
-        - /bin/bash
-        - '-c'
-        - /opt/eap/bin/readinessProbe.sh
-    initialDelaySeconds: 10
-  replicas: 1
+    # Make sure to update the KEYCLOAK_URL with the content of `oc get route keycloak`
+    # Do not forget to prepend `https://` and append `/auth`
+    - name: KEYCLOAK_URL
+      value: https://keycloak-coolstore.apps.92393e11c4ffbef7e179.hypershift.aws-2.ci.openshift.org/auth
