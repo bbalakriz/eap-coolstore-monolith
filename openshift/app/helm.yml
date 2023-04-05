@@ -8,8 +8,6 @@ build:
       - cloud-server
       - postgresql-datasource
       - ejb
-      - cdi
-      - messaging-activemq
   env:
     - name: POSTGRESQL_DRIVER_VERSION
       value: 42.6.0
@@ -44,4 +42,4 @@ deploy:
     # Make sure to update the KEYCLOAK_URL with the content of `oc get route keycloak`
     # Do not forget to prepend `https://` and append `/auth`
     - name: KEYCLOAK_URL
-      value: https://keycloak-coolstore3.apps.e71ecc5b5e10048ab57b.hypershift.aws-2.ci.openshift.org/auth
+      value: https://keycloak-coolstore.apps.66d651e5e828bba717d8.hypershift.aws-2.ci.openshift.org/auth
