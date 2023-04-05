@@ -1,3 +1,16 @@
+---
+kind: Keycloak
+apiVersion: keycloak.org/v1alpha1
+metadata:
+  name: eap-sso
+  labels:
+    app: sso
+spec:
+  instances: 1
+  externalAccess:
+    enabled: true
+---
+
 kind: KeycloakRealm
 apiVersion: keycloak.org/v1alpha1
 metadata:

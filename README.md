@@ -9,53 +9,59 @@ This repository has the complete coolstore monolith built as a Java EE 7 applica
 
 ## Create project
 
-`oc new-project eap`
+```
+oc new-project coolstore
+```
 
-## Deploy RH SSO operator
+## Deploy the RH-SSO anD AMQ Operators
 
-`oc apply -f sso-operator.yml`
+```
+oc apply -f ./openshift/operators
+```
 
-## Deploy RH SSO instance
+Wait for both operators to to be deployed (waiting until their ClusterServiceVersion's `PHASE` is set to `Suceeded`)
 
-Wait for RH SSO Operator to be deployed.
+```
+oc get csv -w
+```
 
-`oc apply -f sso-instance.yml`
+Once they are installed, it will display:
 
-## Configure RH SSO
+```
+NAME                           DISPLAY                           VERSION         REPLACES                       PHASE
+rhsso-operator.7.6.2-opr-001   Red Hat Single Sign-On Operator   7.6.2-opr-001   rhsso-operator.7.6.1-opr-005   Succeeded
+amq-broker-operator.v7.10.2-opr-2-0.1676475747.p   Red Hat Integration - AMQ Broker for RHEL 8 (Multiarch)   7.10.2-opr-2+0.1676475747.p   amq-broker-operator.v7.10.2-opr-1   Succeeded
+```
 
-`oc apply -f sso-config.yml`
+## Deploy the RH-SSO instance, the AMQ Broker and the PostgreSQL
 
-Run `oc get route keycloak` and update KEYCLOAK_URL value in cm.yaml with correct route for SSO, may take a few attempts for route to be created.
+```
+oc apply -f ./openshift/resources
+```
 
-## Deploy postgreSQL database
+Run `oc get route keycloak ` (it may take a few attempts for route to be created) and update `KEYCLOAK_URL` value in `helm.yaml` with correct route for SSO.
+** Make sure to prepend `https://` and append `/auth`to this URL.**. The value should look like:
 
-`oc apply -f psql.yml`
+```
+  - name: KEYCLOAK_URL
+    value: https://keycloak-coolstore.apps.92393e11c4ffbef7e179.hypershift.aws-2.ci.openshift.org/auth
+````
 
-## Install Active MQ broker operator
-
-`oc apply -f amq-broker-operator.yml`
-
-## Create and configure Active MQ broker instance
-
-Wait for AMQ operator to be running.
-
-`oc apply -f amq-deploy.yml`
-
-`oc apply -f amq-topic.yml`
-
-## Deploy application
+## Deploy the application
 
 Create config map from cm.yaml
 
-`oc apply -f cm.yaml`
+```
+oc apply -f ./openshift/app/cm.yaml
+```
 
 From the developer UI, click on "+Add", then "Helm Chart", and select the "Eap74" Helm chart.
 
-Paste the contents of "helm.yml" as the config.
+Paste the contents of `openshift/app/helm.yml` as the config.
 
 ## Testing the application
 
-Once the application is running you should be able to access it via the external route. From the application, click on "Sign in" link at the top right hand corner.  You should be brought to the RH SSO login, login with the credentials: user1/pass
+Once the application is running you should be able to access it via the external route. From the application, click on "Sign in" link at the top right hand corner.  You should be brought to the RH SSO login, login with the credentials: `user1` / `pass`
 
 You should now be able to add products to your cart and complete the checkout process.
 

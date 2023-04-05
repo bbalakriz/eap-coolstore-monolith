@@ -18,3 +18,12 @@ spec:
     size: 2
   console:
     expose: true
+---
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: artemis-address-topic
+spec:
+  addressName: topic.orders
+  queueName: topic/orders
+  routingType: multicast

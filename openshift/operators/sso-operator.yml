@@ -2,20 +2,16 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: rhsso-operator
-  namespace: eap
 spec:
   targetNamespaces:
-  - eap
-
+  - coolstore
 ---
-
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: sso-operator
-  namespace: eap
 spec:
   channel: stable
   name: rhsso-operator
-  source: redhat-operators 
-  sourceNamespace: openshift-marketplace 
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
