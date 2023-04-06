@@ -1,18 +1,9 @@
-build:
-  uri: https://github.com/deewhyweb/eap-coolstore-monolith.git
-  ref: ocp
-  s2i:
-    featurePacks:
-      - 'org.jboss.eap:eap-datasources-galleon-pack:7.4.0.GA-redhat-00003'
-    galleonLayers:
-      - cloud-server
-      - postgresql-datasource
-      - ejb
-      - web-clustering
-  env:
-    - name: POSTGRESQL_DRIVER_VERSION
-      value: 42.6.0
-deploy:
+apiVersion: wildfly.org/v1alpha1
+kind: WildFlyServer
+metadata:
+  name: eap74
+spec:
+  applicationImage: eap74:latest
   replicas: 1
   envFrom:
     - configMapRef:
@@ -43,4 +34,4 @@ deploy:
     # Make sure to update the KEYCLOAK_URL with the content of `oc get route keycloak`
     # Do not forget to prepend `https://` and append `/auth`
     - name: KEYCLOAK_URL
-      value: https://keycloak-coolstore.apps.66d651e5e828bba717d8.hypershift.aws-2.ci.openshift.org/auth
+      value: https://keycloak-coolstore.apps.65c7d3b08ce499ca2f7a.hypershift.aws-2.ci.openshift.org/auth
