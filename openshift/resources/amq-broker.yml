@@ -5,8 +5,8 @@ metadata:
 spec:
   acceptors:
     - name: my-acceptor
-      port: 5672
-      protocols: 'amqp,openwire'
+      port: 61616
+      protocols: 'amqp'
   deploymentPlan:
     image: placeholder
     jolokiaAgentEnabled: false
