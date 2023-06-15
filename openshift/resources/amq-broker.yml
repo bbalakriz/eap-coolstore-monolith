@@ -6,7 +6,7 @@ spec:
   acceptors:
     - name: my-acceptor
       port: 61616
-      protocols: 'amqp'
+      protocols: 'core'
   deploymentPlan:
     image: placeholder
     jolokiaAgentEnabled: false
