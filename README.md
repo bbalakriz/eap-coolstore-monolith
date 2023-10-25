@@ -40,7 +40,7 @@ eap-operator.v2.3.10                               JBoss EAP                    
 oc apply -f ./openshift/resources
 ```
 
-Run `oc get route keycloak ` (it may take a few attempts for route to be created) and update `KEYCLOAK_URL` value in `helm.yaml` with correct route for SSO.
+Run `oc get route keycloak ` (it may take a few attempts for route to be created) and update `KEYCLOAK_URL` value in `eap.yaml` with correct route for SSO.
 ** Make sure to prepend `https://` and append `/auth`to this URL.**. The value should look like:
 
 ```
