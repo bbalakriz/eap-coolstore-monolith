@@ -8,6 +8,8 @@ To deploy and run the Coolstore application on OpenShift, follow the detailed st
 
 [How to migrate a complex JBoss EAP application to OpenShift](https://developers.redhat.com/articles/2023/08/23/how-migrate-complex-jboss-eap-application-openshift#testing_the_application_by_deploying_on_openshift)
 
+Additionally, connect to the POSTGRES DB from pod terminal and execute the 2 .sql files available under src/main/resources/db/migration folder
+
 ## Key Highlights
 
 - **Updated for JBoss EAP 8**: The application has been updated to leverage the latest features and capabilities of JBoss EAP 8.
