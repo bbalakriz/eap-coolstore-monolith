@@ -182,6 +182,7 @@
                             </feature-packs>
                             <layers>
                                 <layer>postgresql-datasource</layer>
+                                <layer>jaxrs-server</layer>
                                 <layer>cloud-server</layer>
                             </layers>
                             <filename>ROOT.war</filename>
