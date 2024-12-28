@@ -15,6 +15,8 @@ Additionally, connect to the POSTGRES DB from pod terminal and execute the 2 .sq
 - **Updated for JBoss EAP 8**: The application has been updated to leverage the latest features and capabilities of JBoss EAP 8.
 - **Optimized for OpenShift**: Modifications ensure seamless deployment and performance in OpenShift environments.
 
----
-
 For more information, refer to the linked article or explore the repository for specific configuration and deployment files.
+
+## Additional references
+https://developers.redhat.com/learning/learn:java:develop-modern-java-applications-jboss-eap-8/resource/resources:deploy-modern-jboss-eap-8-application-openshift
+https://developers.redhat.com/articles/2024/11/08/jboss-eap-images-galleon#
