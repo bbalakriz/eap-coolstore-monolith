@@ -1,10 +1,10 @@
 package com.redhat.coolstore.service;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 
 import jakarta.ejb.Stateful;
 import jakarta.inject.Inject;
-
 
 import com.redhat.coolstore.model.Product;
 import com.redhat.coolstore.model.ShoppingCart;
@@ -25,13 +25,10 @@ public class ShoppingCartService implements Serializable {
     @Inject
     PromoService ps;
 
-
     @Inject
     ShoppingCartOrderProcessor shoppingCartOrderProcessor;
 
-    private ShoppingCart cart  = new ShoppingCart(); //Each user can have multiple shopping carts (tabbed browsing)
-
-   
+    private ShoppingCart cart = new ShoppingCart(); // Each user can have multiple shopping carts (tabbed browsing)
 
     public ShoppingCartService() {
     }
@@ -42,10 +39,10 @@ public class ShoppingCartService implements Serializable {
 
     public ShoppingCart checkOutShoppingCart(String cartId) {
         ShoppingCart cart = this.getShoppingCart(cartId);
-      
+
         log.info("Sending  order: ");
         shoppingCartOrderProcessor.process(cart);
-   
+
         cart.resetShoppingCartItemList();
         priceShoppingCart(cart);
         return cart;
@@ -91,7 +88,7 @@ public class ShoppingCartService implements Serializable {
 
         for (ShoppingCartItem sci : sc.getShoppingCartItemList()) {
             Product p = getProduct(sci.getProduct().getItemId());
-            //if product exist
+            // if product exist
             if (p != null) {
                 sci.setProduct(p);
                 sci.setPrice(p.getPrice());
