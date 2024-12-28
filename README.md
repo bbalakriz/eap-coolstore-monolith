@@ -18,5 +18,5 @@ Additionally, connect to the POSTGRES DB from pod terminal and execute the 2 .sq
 For more information, refer to the linked article or explore the repository for specific configuration and deployment files.
 
 ## Additional references
-https://developers.redhat.com/learning/learn:java:develop-modern-java-applications-jboss-eap-8/resource/resources:deploy-modern-jboss-eap-8-application-openshift
-https://developers.redhat.com/articles/2024/11/08/jboss-eap-images-galleon#
+- https://developers.redhat.com/learning/learn:java:develop-modern-java-applications-jboss-eap-8/resource/resources:deploy-modern-jboss-eap-8-application-openshift
+- https://developers.redhat.com/articles/2024/11/08/jboss-eap-images-galleon#
