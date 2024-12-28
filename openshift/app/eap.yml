@@ -1,9 +1,9 @@
 apiVersion: wildfly.org/v1alpha1
 kind: WildFlyServer
 metadata:
-  name: eap74
+  name: eap8
 spec:
-  applicationImage: eap74:latest
+  applicationImage: eap8:latest
   replicas: 1
   envFrom:
     - configMapRef:
