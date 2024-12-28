@@ -8,7 +8,6 @@ import jakarta.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.rmi.PortableRemoteObject;
 import java.util.Hashtable;
 import java.util.logging.Logger;
 
@@ -58,13 +57,20 @@ public class InventoryNotificationMDB implements MessageListener {
 
     public void init() throws NamingException, JMSException {
         Context ctx = getInitialContext();
-        TopicConnectionFactory tconFactory = (TopicConnectionFactory) PortableRemoteObject.narrow(ctx.lookup(JMS_FACTORY), TopicConnectionFactory.class);
-        tcon = tconFactory.createTopicConnection();
-        tsession = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-        Topic topic = (Topic) PortableRemoteObject.narrow(ctx.lookup(TOPIC), Topic.class);
-        tsubscriber = tsession.createSubscriber(topic);
-        tsubscriber.setMessageListener(this);
-        tcon.start();
+        Object obj = ctx.lookup(JMS_FACTORY);
+        if (obj instanceof TopicConnectionFactory) {
+            TopicConnectionFactory tconFactory = (TopicConnectionFactory) obj;
+            tcon = tconFactory.createTopicConnection();
+            tsession = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            Object obj1 = ctx.lookup(TOPIC);
+            if (obj1 instanceof Topic) {
+                Topic topic = (Topic) obj1;
+                tsubscriber = tsession.createSubscriber(topic);
+                tsubscriber.setMessageListener(this);
+                tcon.start();
+            }
+        } 
     }
 
     public void close() throws JMSException {
