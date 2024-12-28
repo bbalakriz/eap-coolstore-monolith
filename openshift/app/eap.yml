@@ -34,4 +34,4 @@ spec:
     # Make sure to update the KEYCLOAK_URL with the content of `oc get route keycloak`
     # Do not forget to prepend `https://` and append `/auth`
     - name: KEYCLOAK_URL
-      value: https://keycloak-coolstore.apps.cluster-jfwv4.jfwv4.sandbox1700.opentlc.com/auth
+      value: https://keycloak-coolstore.apps.cluster-v9htn.v9htn.sandbox2076.opentlc.com/auth
