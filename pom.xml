@@ -13,6 +13,30 @@
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
         <project.encoding>UTF-8</project.encoding>
         <maven.test.skip>true</maven.test.skip>
+        <jdk.min.version>11</jdk.min.version>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <version.jakarta.ee>10.0.0</version.jakarta.ee>
+        <version.org.jboss.arquillian>1.8.0.Final</version.org.jboss.arquillian>
+        <version.org.jboss.resteasy>6.2.5.Final</version.org.jboss.resteasy>
+        <version.org.junit>5.10.2</version.org.junit>
+        <version.org.wildfly>31.0.0.Final</version.org.wildfly>
+        <version.org.wildfly.arquillian>5.0.1.Final</version.org.wildfly.arquillian>
+
+        <version.wildfly-maven-plugin>4.2.2.Final</version.wildfly-maven-plugin>
+
+        <!-- Test properties -->
+        <jboss.home>${project.build.directory}${file.separator}wildfly</jboss.home>
+        <debug.port>8787</debug.port>
+        <debugJvmArgs />
+        <!-- The versions for BOMs, Dependencies and Plugins -->
+        <version.server.bom>8.0.0.GA-redhat-00009</version.server.bom>
+        <maven.repository.protocol>https</maven.repository.protocol>
+        <!-- The full remote maven repo URL; can be overridden via -D for special use cases -->
+        <maven.repository.url>
+            ${maven.repository.protocol}://repository.jboss.org/nexus/content/groups/public/</maven.repository.url>
+        <!-- https://access.redhat.com/maven-repository -->
+        <maven.redhat.repository.url>${maven.repository.protocol}://maven.repository.redhat.com/ga/</maven.redhat.repository.url>
     </properties>
     <dependencies>
         <dependency>
@@ -38,6 +62,52 @@
             <version>1.0.2.Final</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>${maven.repository.url}</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <id>jboss-enterprise-maven-repository</id>
+            <name>JBoss Enterprise Maven Repository</name>
+            <url>${maven.redhat.repository.url}</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>redhat-ea-maven-repository</id>
+            <name>Red Hat Early Access Maven Repository</name>
+            <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <layout>default</layout>
+        </repository>
+
+    </repositories>
 
     <pluginRepositories>
 
