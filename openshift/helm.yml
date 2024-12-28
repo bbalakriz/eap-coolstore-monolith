@@ -1,16 +1,29 @@
 build:
-  uri: https://github.com/deewhyweb/eap-coolstore-monolith.git
-  ref: ocp
-  s2i:
-    featurePacks:
-      - 'org.jboss.eap:eap-datasources-galleon-pack:7.4.0.GA-redhat-00003'
-    galleonLayers:
-      - cloud-server
-      - postgresql-datasource
-      - ejb
-      - web-clustering
+  enabled: true
   env:
     - name: POSTGRESQL_DRIVER_VERSION
-      value: 42.6.0
+      value: 42.5.1
+    - name: KEYCLOAK_URL
+      value: >-
+        https://keycloak-coolstore.apps.cluster-v9htn.v9htn.sandbox2076.opentlc.com/auth
+  mode: s2i
+  output:
+    kind: ImageStreamTag
+  ref: main
+  s2i:
+    buildApplicationImage: true
+    jdk: '17'
+    kind: DockerImage
+  uri: 'https://github.com/bbalakriz/eap-coolstore-monolith.git'
 deploy:
   enabled: false
+  route:
+    enabled: true
+    tls:
+      enabled: true
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+  tls:
+    enabled: false
+image:
+  tag: latest
