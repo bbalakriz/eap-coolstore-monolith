@@ -11,7 +11,7 @@ import com.redhat.coolstore.model.ShoppingCart;
 import com.redhat.coolstore.model.ShoppingCartItem;
 
 @Stateful
-public class ShoppingCartService  {
+public class ShoppingCartService implements Serializable {
 
     @Inject
     Logger log;
